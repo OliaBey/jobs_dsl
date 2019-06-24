@@ -1,0 +1,57 @@
+pipeline {
+    agent any
+    parameters {
+        choice(choices: ['d2-main' , 'q2-main'], description: '', name: 'ENVIRONMENT')
+        string(defaultValue: 'Type here', description: 'Type a text', name: 'TEXT')
+        booleanParam(defaultValue: true, description: 'TARGET_ALL', name: 'TARGET_ALL')
+        booleanParam(defaultValue: false, description: 'TARGET_1', name: 'TARGET_1')
+        booleanParam(defaultValue: false, description: 'TARGET_2', name: 'TARGET_2')
+        booleanParam(defaultValue: false, description: 'TARGET_3', name: 'TARGET_3')
+        booleanParam(defaultValue: false, description: 'TARGET_4', name: 'TARGET_4')
+    }
+    stages {
+        stage('Prepare') {
+            steps {
+                writeFile file: "${WORKSPACE}/run.sh", text: '''#!/usr/bin/env bash
+                echo $1        '''
+            }
+        }
+
+        stage('1') {
+            when {
+                expression { return params.TARGET_1 || params.TARGET_ALL }
+            }
+            steps {
+                sh "bash ${WORKSPACE}/run.sh ${params.ENVIRONMENT}" 
+            }
+        }
+
+  
+        stage('2') {
+            when {
+                expression { return params.TARGET_2 || params.TARGET_ALL }
+            }
+            steps {
+                sh "bash ${WORKSPACE}/run.sh ${params.ENVIRONMENT}" 
+            }
+        }
+        
+        stage('3') {
+            when {
+                expression { return params.TARGET_3 || params.TARGET_ALL }
+            }
+            steps {
+                sh "bash ${WORKSPACE}/run.sh ${params.ENVIRONMENT}" 
+            }
+        }
+        
+        stage('4') {
+            when {
+                expression { return params.TARGET_4 || params.TARGET_ALL }
+            }
+            steps {
+                sh "bash ${WORKSPACE}/run.sh ${params.ENVIRONMENT}" 
+            }  
+        }
+    }
+}
