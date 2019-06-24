@@ -1,7 +1,7 @@
 pipeline {
     agent any
     parameters {
-        choice(choices: ['d2-main' , 'q2-main'], description: '', name: 'ENVIRONMENT')
+        choice(choices: ['d' , 'q'], description: '', name: 'ENVIRONMENT')
         string(defaultValue: 'Type here', description: 'Type a text', name: 'TEXT')
         booleanParam(defaultValue: true, description: 'TARGET_ALL', name: 'TARGET_ALL')
         booleanParam(defaultValue: false, description: 'TARGET_1', name: 'TARGET_1')
