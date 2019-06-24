@@ -1,22 +1,18 @@
 pipeline {
-    agent {
-    
+    agent any     
         stages {
-            stage("Run groovy scripts") {
+            stage("Run script") {
                 steps {
-                    script {
-                            echo "Hello, friend!"
-                    }
+                        echo "Hello, friend!"
                 }
             }
             
             
             stage("Run jobs dsl") {
                 steps {
-                    jobDsl targets: 'files/**/*.groovy'
+                    jobDsl targets: 'files/*.groovy'
                     jobDsl targets: 'jobs/*.groovy'
                 }
             }
         }
-    }
 }
